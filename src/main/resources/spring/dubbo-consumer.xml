@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+        default-autowire="byName" >
+    <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样-->
+ 
+    <!-- 使用multicast广播注册中心暴露发现服务地址 -->
+<!--     <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
+   
+ <!--    <dubbo:registry address="10.10.5.77:2800" protocol="zookeeper" id="consumer" /> -->
+    <dubbo:registry address="N/A"/> 
+    <dubbo:protocol id="dubbo-consumer" name="dubbo" port="20884" />    
+
+    <!-- UC用户中心 -->  
+    <dubbo:reference interface="com.lianjia.uc.api.user.EhrUserFacade" id ="ehrUserFacade1"  url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.user.EhrUserFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.uc.api.org.EhrOrgFacade" id = "ehrOrgFacade1"  url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.org.EhrOrgFacade"/>    
+    
+    <dubbo:reference interface="com.lianjia.uc.api.user.UserOrgPositionFacade" id = "userOrgPositionFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.user.UserOrgPositionFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.uc.api.event.EhrEventFacade" id = "ehrEventFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.event.EhrEventFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.uc.api.auth.UcAuthFacade" id = "ucAuthFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.auth.UcAuthFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.uc.api.avatar.AvatarHistoryFacade" id = "avatarHistoryFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.avatar.AvatarHistoryFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.uc.api.avatar.UcUserAvatarFacade" id = "ucUserAvatarFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.avatar.UcUserAvatarFacade" />
+        
+    <dubbo:reference interface="com.lianjia.uc.api.city.UcCityFacade" id = "ucCityFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.city.UcCityFacade"/>
+
+    <dubbo:reference interface="com.lianjia.uc.api.crypt.UcEncryptFacade" id = "ucEncryptFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.crypt.UcEncryptFacade"/>  
+         
+    <dubbo:reference interface="com.lianjia.uc.api.ext.DutyMappingFacade" id = "dutyMappingFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.ext.DutyMappingFacade" />
+
+    <dubbo:reference interface="com.lianjia.uc.api.ext.UcOrgExtInfoFacade" id = "ucOrgExtInfoFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.ext.UcOrgExtInfoFacade"/>   
+    
+    <dubbo:reference interface="com.lianjia.uc.api.passport.LianjiaEmailLoginFacade" id = "lianjiaEmailLoginFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.passport.LianjiaEmailLoginFacade"/> 
+      
+    <dubbo:reference interface="com.lianjia.uc.api.passport.OPTokenValidateFacade" id = "oPTokenValidateFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.passport.OPTokenValidateFacade"/>   
+    
+    <dubbo:reference interface="com.lianjia.uc.api.passport.StaffPassportFacade" id = "staffPassportFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.passport.StaffPassportFacade"/>   
+    
+    <dubbo:reference interface="com.lianjia.uc.api.passport.UserPassportFacade" id = "userPassportFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.passport.UserPassportFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.uc.api.postion.EhrPositionFacade" id = "ehrPositionFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.postion.EhrPositionFacade"/> 
+       
+    <dubbo:reference interface="com.lianjia.uc.api.sug.SugFacade" id = "sugFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.sug.SugFacade"/>   
+    
+    <dubbo:reference interface="com.lianjia.uc.api.user.CheckoutFacade" id = "checkoutFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.user.CheckoutFacade"/> 
+          
+    <dubbo:reference interface="com.lianjia.uc.api.user.DooiooUserFacade" id = "dooiooUserFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.user.DooiooUserFacade"/>   
+    
+    <dubbo:reference interface="com.lianjia.uc.api.user.MTHUserFacade" id = "mTHUserFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.user.MTHUserFacade"/>   
+    
+    <dubbo:reference interface="com.lianjia.uc.api.user.UserFacade" id = "userFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.user.UserFacade"/>
+
+    <dubbo:reference interface ="com.lianjia.uc.api.event.EhrUserEventSnapshotFacade" id = "ehrUserEventSnapshotFacade1" url="dubbo://10.10.5.77:25100/com.lianjia.uc.api.event.EhrUserEventSnapshotFacade"/>
+
+    <dubbo:reference interface="com.lianjia.customer.api.client.service.CustomerFacade" id = "customerFacade1" version="1.0.1"  url="dubbo://10.10.5.77:27300/com.lianjia.customer.api.client.service.CustomerFacade" />
+
+    <dubbo:reference interface="com.lianjia.customer.api.service.CustomerFacade" id = "customerFacade11" version="1.0.1"  url="dubbo://10.10.5.77:27300/com.lianjia.customer.api.client.service.CustomerFacade" />
+
+    <dubbo:reference interface="com.lianjia.customer.api.client.service.AuthorityFacade" id = "authorityFacade1" version="1.0.1"  url="dubbo://10.10.5.77:27300/com.lianjia.customer.api.client.service.AuthorityFacade" />
+    
+    <dubbo:reference interface="com.lianjia.customer.api.client.service.ConfigFacade" id = "configFacade1" version="1.0.1"  url="dubbo://10.10.5.77:27300/com.lianjia.customer.api.client.service.ConfigFacade" />
+    
+    <dubbo:reference interface="com.lianjia.customer.api.client.service.CustomerFeedFacade" id = "customerFeedFacade1" version="1.0.1"  url="dubbo://10.10.5.77:27300/com.lianjia.customer.api.client.service.CustomerFeedFacade"/>
+
+    <dubbo:reference interface="com.lianjia.customer.api.client.service.LabelFacade" id = "labelFacade1" version="1.0.1"  url="dubbo://10.10.5.77:27300/com.lianjia.customer.api.client.service.LabelFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.customer.api.client.service.InvalidFacade" id = "invalidFacade1" version="1.0.1"  url="dubbo://10.10.5.77:27300/com.lianjia.customer.api.client.service.InvalidFacade"/>
+
+    <dubbo:reference interface="com.lianjia.customer.api.client.service.RemarkFacade" id = "remarkFacade1" version="1.0.1"  url="dubbo://10.10.5.77:27300/com.lianjia.customer.api.client.service.RemarkFacade"/>
+
+    <dubbo:reference interface="com.lianjia.customer.api.client.service.ShowingFacade" id = "showingFacade1" version="1.0.1"   url="dubbo://10.10.5.77:27300/com.lianjia.customer.api.client.service.ShowingFacade"/>
+
+    <dubbo:reference interface="com.lianjia.customer.api.client.service.SincerityFacade" id = "sincerityFacade1" version="1.0.1" url="dubbo://10.10.5.77:27300/com.lianjia.customer.api.client.service.SincerityFacade" />
+    
+    <dubbo:reference interface="com.lianjia.customer.api.client.service.crm.CustomerInputForCrmFacade" id = "customerInputForCrmFacade1" version="1.0.1"  url="dubbo://10.10.5.77:27300/com.lianjia.customer.api.client.service.crm.CustomerInputForCrmFacade"/>
+
+    <dubbo:reference interface="com.lianjia.customer.api.client.service.finance.FnCustomerFacade" id = "fnCustomerFacade1" version="1.0.1"  url="dubbo://10.10.5.77:27300/com.lianjia.customer.api.client.service.finance.FnCustomerFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.customer.api.client.service.link.CustomerInputForLinkFacade" id = "customerInputForLinkFacade1" version="1.0.1"  url="dubbo://10.10.5.77:27300/com.lianjia.customer.api.client.service.link.CustomerInputForLinkFacade"/>
+                         
+    <dubbo:reference interface="com.lianjia.daikan.api.service.DaikanFacade" id = "daikanFacade1" version="1.0.1" url="dubbo://10.10.5.77:31000/com.lianjia.daikan.api.service.DaikanFacade"/>
+
+    <dubbo:reference interface="com.lianjia.daikan.api.service.DistrictManagerFacade" id = "districtManagerFacade1" version="1.0.1" url="dubbo://10.10.5.77:31000/com.lianjia.daikan.api.service.DaikanFacade"/>
+
+    <dubbo:reference interface="com.lianjia.house.api.HouseRedstarFacade" id = "houseRedstarFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HouseRedstarFacade"/> 
+    
+    <dubbo:reference interface="com.lianjia.house.api.HouseAgentShopFacade" id = "houseAgentShopFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HouseAgentShopFacade"/>
+
+    <dubbo:reference interface="com.lianjia.house.api.HouseAppFacade" id = "houseAppFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HouseAppFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.house.api.HouseAppointFacade" id = "houseAppointFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HouseAppointFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.house.api.HouseCameramanFacade" id = "houseCameramanFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/houseCameramanFacade"/>
+
+    <dubbo:reference interface="com.lianjia.house.api.HouseCrmFacade" id = "houseCrmFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/houseCrmFacade"/>
+
+    <dubbo:reference interface="com.lianjia.house.api.HousedelAddFacade" id = "housedelAddFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HousedelAddFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.house.api.HousedelFacade" id = "housedelFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HousedelFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.house.api.HouseDelIndexgenFacade" id = "houseDelIndexgenFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HouseDelIndexgenFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.house.api.HouseDistrictMgrFacade" id = "houseDistrictMgrFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HouseDistrictMgrFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.house.api.HouseFeedFacade" id = "houseFeedFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HouseFeedFacade"/>        
+                                   
+    <dubbo:reference interface="com.lianjia.house.api.HouseFinanceFacade" id = "houseFinanceFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HouseFinanceFacade"/>
+
+    <dubbo:reference interface="com.lianjia.house.api.HouseHdicFacade" id = "houseHdicFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HouseHdicFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.house.api.HouseLinkAppFacade" id = "houseLinkAppFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HouseLinkAppFacade" />
+       
+    <dubbo:reference interface="com.lianjia.house.api.HouseOwnerFacade" id = "houseOwnerFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HouseOwnerFacade"/>
+    
+    <dubbo:reference interface="com.lianjia.house.api.HousePerformanceFacade" id = "housePerformanceFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HousePerformanceFacade"/>   
+
+    <dubbo:reference interface="com.lianjia.house.api.HouseSearchProvider" id = "houseSearchProvider1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HouseSearchProvider"/>
+    
+    <dubbo:reference interface="com.lianjia.house.api.HouseSelfBuildFacade" id = "houseSelfBuildFacade1" version="1.0.1" url="dubbo://10.10.5.77:27200/com.lianjia.house.api.HouseSelfBuildFacade"/>   
+     
+    <dubbo:reference interface="com.lianjia.feed.api.trend.FeedFacade"  id =  "feedFacade1" version="1.0.1" check="false" url="dubbo://10.10.5.77:27010/com.lianjia.feed.api.trend.FeedFacade"/>  
+    
+    <dubbo:reference interface="com.lianjia.feed.api.trend.FollowFacade" id =  "followFacade1" version="1.0.1" check="false" url="dubbo://10.10.5.77:27010/com.lianjia.feed.api.trend.FollowFacade"/>
+
+    <dubbo:reference interface="com.lianjia.feed.api.trend.AuthorityFacade"  id =  "authorityFacade11" version="1.0.1" check="false" url="dubbo://10.10.5.77:27010/com.lianjia.feed.api.trend.AuthorityFacade"/>  
+
+    <dubbo:reference interface="com.lianjia.feed.api.trend.FeedRPCFacade"  id =  "feedRPCFacade1" version="1.0.1" check="false" url="dubbo://10.10.5.77:27010/com.lianjia.feed.api.trend.FeedRPCFacade"/>  
+
+    <dubbo:reference interface="com.lianjia.feed.api.trend.FollowRPCFacade"  id =  "followRPCFacade1" version="1.0.1" check="false" url="dubbo://10.10.5.77:27010/com.lianjia.feed.api.trend.FollowRPCFacade"/>  
+
+    <dubbo:reference interface="com.lianjia.division.api.DivisionFacade" id =  "divisionFacade1" check="false" url="dubbo://10.10.5.77:27100/com.lianjia.division.api.DivisionFacade"/>    
+        
+</beans>     
+          

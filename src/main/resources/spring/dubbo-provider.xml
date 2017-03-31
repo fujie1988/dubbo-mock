@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://code.alibabatech.com/schema/dubbo  
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd  
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd"
+        default-autowire="byName">
+
+    <context:property-placeholder location="classpath:spring/config.properties"/>
+
+    <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+    <dubbo:application name="link-mock"/>
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry address="${dubbo.zookeeper.address}" protocol="zookeeper" id="provider" />
+    <dubbo:protocol id="dubbo-provider" name="dubbo" port="${dubbo.protocol.port}" />    
+    <dubbo:provider registry="provider" protocol="dubbo-provider" />
+
+    <!-- UC用户中心 -->  
+    <dubbo:service interface="com.lianjia.uc.api.user.EhrUserFacade" ref ="ehrUserFacade" registry="provider" />
+    <bean id="ehrUserFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.user.EhrUserFacade"/> 
+    </bean>    
+    <bean id="ehrUserFacade" factory-bean="ehrUserFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.uc.api.org.EhrOrgFacade" ref ="ehrOrgFacade" registry="provider" />    
+    <bean id="ehrOrgFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.org.EhrOrgFacade"/> 
+    </bean>        
+    <bean id="ehrOrgFacade" factory-bean="ehrOrgFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.uc.api.user.UserOrgPositionFacade" ref ="userOrgPositionFacade" registry="provider" />
+    <bean id="userOrgPositionFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.user.UserOrgPositionFacade"/> 
+    </bean>        
+    <bean id="userOrgPositionFacade" factory-bean="userOrgPositionFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.uc.api.event.EhrEventFacade" ref ="ehrEventFacade" registry="provider"/>
+    <bean id="ehrEventFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.event.EhrEventFacade"/> 
+    </bean>        
+    <bean id="ehrEventFacade" factory-bean="ehrEventFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.uc.api.auth.UcAuthFacade" ref ="ucAuthFacade" registry="provider"/>
+    <bean id="ucAuthFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.auth.UcAuthFacade"/> 
+    </bean>        
+    <bean id="ucAuthFacade" factory-bean="ucAuthFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.uc.api.avatar.AvatarHistoryFacade" ref ="avatarHistoryFacade" registry="provider"/>
+    <bean id="avatarHistoryFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.avatar.AvatarHistoryFacade"/> 
+    </bean>    
+    <bean id="avatarHistoryFacade" factory-bean="avatarHistoryFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.uc.api.avatar.UcUserAvatarFacade" ref ="ucUserAvatarFacade" registry="provider"/>
+    <bean id="ucUserAvatarFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.avatar.UcUserAvatarFacade"/> 
+    </bean>    
+    <bean id="ucUserAvatarFacade" factory-bean="ucUserAvatarFacadeFactory" factory-method = "createProxy" >
+    </bean>
+        
+    <dubbo:service interface="com.lianjia.uc.api.city.UcCityFacade" ref ="ucCityFacade" registry="provider"/>
+    <bean id="ucCityFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.city.UcCityFacade"/> 
+    </bean>    
+    <bean id="ucCityFacade" factory-bean="ucCityFacadeFactory" factory-method = "createProxy" >
+    </bean>
+        
+    <dubbo:service interface="com.lianjia.uc.api.crypt.UcEncryptFacade" ref ="ucEncryptFacade" registry="provider"/>  
+    <bean id="ucEncryptFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.crypt.UcEncryptFacade"/> 
+    </bean>    
+    <bean id="ucEncryptFacade" factory-bean="ucEncryptFacadeFactory" factory-method = "createProxy" >
+    </bean>
+         
+    <dubbo:service interface="com.lianjia.uc.api.ext.DutyMappingFacade" ref ="dutyMappingFacade" registry="provider"/>
+    <bean id="dutyMappingFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.ext.DutyMappingFacade"/> 
+    </bean>    
+    <bean id="dutyMappingFacade" factory-bean="dutyMappingFacadeFactory" factory-method = "createProxy" >
+    </bean>
+       
+    <dubbo:service interface="com.lianjia.uc.api.ext.UcOrgExtInfoFacade" ref ="ucOrgExtInfoFacade" registry="provider"/>   
+    <bean id="ucOrgExtInfoFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.ext.UcOrgExtInfoFacade"/> 
+    </bean>    
+    <bean id="ucOrgExtInfoFacade" factory-bean="ucOrgExtInfoFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.uc.api.passport.LianjiaEmailLoginFacade" ref ="lianjiaEmailLoginFacade" registry="provider"/> 
+    <bean id="lianjiaEmailLoginFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.passport.LianjiaEmailLoginFacade"/> 
+    </bean>    
+    <bean id="lianjiaEmailLoginFacade" factory-bean="lianjiaEmailLoginFacadeFactory" factory-method = "createProxy" >
+    </bean>
+      
+    <dubbo:service interface="com.lianjia.uc.api.passport.OPTokenValidateFacade" ref ="oPTokenValidateFacade" registry="provider"/>   
+    <bean id="oPTokenValidateFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.passport.OPTokenValidateFacade"/> 
+    </bean>    
+    <bean id="oPTokenValidateFacade" factory-bean="oPTokenValidateFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.uc.api.passport.StaffPassportFacade" ref ="staffPassportFacade" registry="provider"/>   
+    <bean id="staffPassportFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.passport.StaffPassportFacade"/> 
+    </bean>    
+    <bean id="staffPassportFacade" factory-bean="staffPassportFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.uc.api.passport.UserPassportFacade" ref ="userPassportFacade" registry="provider"/>
+    <bean id="userPassportFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.passport.UserPassportFacade"/> 
+    </bean>    
+    <bean id="userPassportFacade" factory-bean="userPassportFacadeFactory" factory-method = "createProxy" >
+    </bean>   
+    
+    <dubbo:service interface="com.lianjia.uc.api.postion.EhrPositionFacade" ref ="ehrPositionFacade" registry="provider"/> 
+    <bean id="ehrPositionFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.postion.EhrPositionFacade"/> 
+    </bean>    
+    <bean id="ehrPositionFacade" factory-bean="ehrPositionFacadeFactory" factory-method = "createProxy" >
+    </bean>  
+       
+    <dubbo:service interface="com.lianjia.uc.api.sug.SugFacade" ref ="sugFacade" registry="provider"/>   
+    <bean id="sugFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.sug.SugFacade"/> 
+    </bean>    
+    <bean id="sugFacade" factory-bean="sugFacadeFactory" factory-method = "createProxy" >
+    </bean> 
+    
+    <dubbo:service interface="com.lianjia.uc.api.user.CheckoutFacade" ref ="checkoutFacade" registry="provider"/> 
+    <bean id="checkoutFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.user.CheckoutFacade"/> 
+    </bean>    
+    <bean id="checkoutFacade" factory-bean="checkoutFacadeFactory" factory-method = "createProxy" >
+    </bean>
+          
+    <dubbo:service interface="com.lianjia.uc.api.user.DooiooUserFacade" ref ="dooiooUserFacade" registry="provider"/>   
+    <bean id="dooiooUserFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.user.DooiooUserFacade"/> 
+    </bean>    
+    <bean id="dooiooUserFacade" factory-bean="dooiooUserFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.uc.api.user.MTHUserFacade" ref ="mTHUserFacade" registry="provider"/>   
+    <bean id="mTHUserFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.user.MTHUserFacade"/> 
+    </bean>    
+    <bean id="mTHUserFacade" factory-bean="mTHUserFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.uc.api.user.UserFacade" ref ="userFacade" registry="provider"/>
+    <bean id="userFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.user.UserFacade"/> 
+    </bean>    
+    <bean id="userFacade" factory-bean="userFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface ="com.lianjia.uc.api.event.EhrUserEventSnapshotFacade" ref ="ehrUserEventSnapshotFacade" registry="provider"/>
+    <bean id="ehrUserEventSnapshotFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.uc.api.event.EhrUserEventSnapshotFacade"/> 
+    </bean>    
+    <bean id="ehrUserEventSnapshotFacade" factory-bean="ehrUserEventSnapshotFacadeFactory" factory-method = "createProxy" >
+    </bean>
+
+    <dubbo:service interface="com.lianjia.customer.api.service.CustomerFacade" ref ="customerOldFacade" version="1.0.1" registry="provider" />
+    <bean id="customerOldFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.customer.api.service.CustomerFacade"/> 
+    </bean>        
+    <bean id="customerOldFacade" factory-bean="customerOldFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.customer.api.client.service.CustomerFacade" ref ="customerFacade" version="1.0.1" registry="provider" />
+    <bean id="customerFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.customer.api.client.service.CustomerFacade"/> 
+    </bean>        
+    <bean id="customerFacade" factory-bean="customerFacadeFactory" factory-method = "createProxy" >
+    </bean>
+
+    <dubbo:service interface="com.lianjia.customer.api.client.service.AuthorityFacade" ref ="authorityFacade" version="1.0.1" registry="provider"/>
+    <bean id="authorityFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.customer.api.client.service.AuthorityFacade"/> 
+    </bean>        
+    <bean id="authorityFacade" factory-bean="authorityFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.customer.api.client.service.ConfigFacade" ref ="configFacade" version="1.0.1" registry="provider"/>
+    <bean id="configFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.customer.api.client.service.ConfigFacade"/> 
+    </bean>        
+    <bean id="configFacade" factory-bean="configFacadeFactory" factory-method = "createProxy" >
+    </bean>
+
+    <dubbo:service interface="com.lianjia.customer.api.service.CustomerDasFacade" ref ="customerDasFacade" version="1.0.1" registry="provider" />
+    <bean id="customerDasFacadeFactory" class="com.lianjia.test.DubboFactory" >
+        <constructor-arg value="com.lianjia.customer.api.service.CustomerDasFacade"/>
+    </bean>
+    <bean id="customerDasFacade" factory-bean="customerDasFacadeFactory" factory-method = "createProxy" >
+    </bean>
+
+    <dubbo:service interface="com.lianjia.customer.api.client.service.CustomerFeedFacade" ref ="customerFeedFacade" version="1.0.1" registry="provider"/>
+    <bean id="customerFeedFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.customer.api.client.service.CustomerFeedFacade"/> 
+    </bean>        
+    <bean id="customerFeedFacade" factory-bean="customerFeedFacadeFactory" factory-method = "createProxy" >
+    </bean>
+
+    <dubbo:service interface="com.lianjia.customer.api.client.service.LabelFacade" ref ="labelFacade" version="1.0.1" registry="provider"/>
+    <bean id="labelFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.customer.api.client.service.LabelFacade"/> 
+    </bean>        
+    <bean id="labelFacade" factory-bean="labelFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.customer.api.client.service.InvalidFacade" ref ="invalidFacade" version="1.0.1" registry="provider"/>
+    <bean id="invalidFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.customer.api.client.service.InvalidFacade"/> 
+    </bean>        
+    <bean id="invalidFacade" factory-bean="invalidFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.customer.api.client.service.RemarkFacade" ref ="remarkFacade" version="1.0.1" registry="provider"/>
+    <bean id="remarkFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.customer.api.client.service.RemarkFacade"/> 
+    </bean>        
+    <bean id="remarkFacade" factory-bean="remarkFacadeFactory" factory-method = "createProxy" >
+    </bean>
+
+    <dubbo:service interface="com.lianjia.customer.api.client.service.ShowingFacade" ref ="showingFacade" version="1.0.1"  registry="provider"/>
+    <bean id="showingFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.customer.api.client.service.ShowingFacade"/> 
+    </bean>        
+    <bean id="showingFacade" factory-bean="showingFacadeFactory" factory-method = "createProxy" >
+    </bean>
+
+    <dubbo:service interface="com.lianjia.customer.api.client.service.SincerityFacade" ref ="sincerityFacade" version="1.0.1" registry="provider"/>
+    <bean id="sincerityFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.customer.api.client.service.SincerityFacade"/> 
+    </bean>        
+    <bean id="sincerityFacade" factory-bean="sincerityFacadeFactory" factory-method = "createProxy" >
+    </bean>
+
+    <dubbo:service interface="com.lianjia.customer.api.client.service.crm.CustomerInputForCrmFacade" ref ="customerInputForCrmFacade" version="1.0.1" registry="provider"/>
+    <bean id="customerInputForCrmFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.customer.api.client.service.crm.CustomerInputForCrmFacade"/> 
+    </bean>        
+    <bean id="customerInputForCrmFacade" factory-bean="customerInputForCrmFacadeFactory" factory-method = "createProxy" >
+    </bean>
+
+    <dubbo:service interface="com.lianjia.customer.api.client.service.finance.FnCustomerFacade" ref ="fnCustomerFacade" version="1.0.1" registry="provider"/>
+    <bean id="fnCustomerFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.customer.api.client.service.finance.FnCustomerFacade"/> 
+    </bean>        
+    <bean id="fnCustomerFacade" factory-bean="fnCustomerFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.customer.api.client.service.link.CustomerInputForLinkFacade" ref ="customerInputForLinkFacade" version="1.0.1" registry="provider"/>
+    <bean id="customerInputForLinkFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.customer.api.client.service.link.CustomerInputForLinkFacade"/> 
+    </bean>        
+    <bean id="customerInputForLinkFacade" factory-bean="customerInputForLinkFacadeFactory" factory-method = "createProxy" >
+    </bean>
+
+    <dubbo:service interface="com.lianjia.daikan.api.service.DaikanFacade" ref ="daikanFacade" version="1.0.1" registry="provider"/>
+    <bean id="daikanFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.daikan.api.service.DaikanFacade"/> 
+    </bean>        
+    <bean id="daikanFacade" factory-bean="daikanFacadeFactory" factory-method = "createProxy" >
+    </bean>
+    
+    <dubbo:service interface="com.lianjia.daikan.api.service.DistrictManagerFacade" ref ="districtManagerFacade" version="1.0.1" registry="provider"/>
+    <bean id="districtManagerFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.daikan.api.service.DistrictManagerFacade"/> 
+    </bean>        
+    <bean id="districtManagerFacade" factory-bean="districtManagerFacadeFactory" factory-method = "createProxy" >
+    </bean>
+   
+    <dubbo:service interface="com.lianjia.house.api.HouseRedstarFacade" ref ="houseRedstarFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseRedstarFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseRedstarFacade"/> 
+    </bean>        
+    <bean id="houseRedstarFacade" factory-bean="houseRedstarFacadeFactory" factory-method = "createProxy" >
+    </bean>   
+    
+    <dubbo:service interface="com.lianjia.house.api.HouseAgentShopFacade" ref ="houseAgentShopFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseAgentShopFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseAgentShopFacade"/> 
+    </bean>        
+    <bean id="houseAgentShopFacade" factory-bean="houseAgentShopFacadeFactory" factory-method = "createProxy" >
+    </bean> 
+
+    <dubbo:service interface="com.lianjia.house.api.HouseAppFacade" ref ="houseAppFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseAppFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseAppFacade"/> 
+    </bean>        
+    <bean id="houseAppFacade" factory-bean="houseAppFacadeFactory" factory-method = "createProxy" >
+    </bean> 
+    
+    <dubbo:service interface="com.lianjia.house.api.HouseAppointFacade" ref ="houseAppointFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseAppointFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseAppointFacade"/> 
+    </bean>        
+    <bean id="houseAppointFacade" factory-bean="houseAppointFacadeFactory" factory-method = "createProxy" >
+    </bean> 
+    
+    <dubbo:service interface="com.lianjia.house.api.HouseCameramanFacade" ref ="houseCameramanFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseCameramanFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseCameramanFacade"/> 
+    </bean>        
+    <bean id="houseCameramanFacade" factory-bean="houseCameramanFacadeFactory" factory-method = "createProxy" >
+    </bean> 
+
+    <dubbo:service interface="com.lianjia.house.api.HouseCrmFacade" ref ="houseCrmFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseCrmFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseCrmFacade"/> 
+    </bean>        
+    <bean id="houseCrmFacade" factory-bean="houseCrmFacadeFactory" factory-method = "createProxy" >
+    </bean> 
+
+    <dubbo:service interface="com.lianjia.house.api.HousedelAddFacade" ref ="housedelAddFacade" version="1.0.1" registry="provider"/>
+    <bean id="housedelAddFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HousedelAddFacade"/> 
+    </bean>        
+    <bean id="housedelAddFacade" factory-bean="housedelAddFacadeFactory" factory-method = "createProxy" >
+    </bean> 
+    
+    <dubbo:service interface="com.lianjia.house.api.HousedelFacade" ref ="housedelFacade" version="1.0.1" registry="provider"/>
+    <bean id="housedelFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HousedelFacade"/> 
+    </bean>        
+    <bean id="housedelFacade" factory-bean="housedelFacadeFactory" factory-method = "createProxy" >
+    </bean> 
+    
+    <dubbo:service interface="com.lianjia.house.api.HouseDelIndexgenFacade" ref ="houseDelIndexgenFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseDelIndexgenFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseDelIndexgenFacade"/> 
+    </bean>            
+    <bean id="houseDelIndexgenFacade" factory-bean="houseDelIndexgenFacadeFactory" factory-method = "createProxy" >
+    </bean> 
+    
+    <dubbo:service interface="com.lianjia.house.api.HouseDistrictMgrFacade" ref ="houseDistrictMgrFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseDistrictMgrFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseDistrictMgrFacade"/> 
+    </bean>        
+    <bean id="houseDistrictMgrFacade" factory-bean="houseDistrictMgrFacadeFactory" factory-method = "createProxy" >
+    </bean> 
+    
+    <dubbo:service interface="com.lianjia.house.api.HouseFeedFacade" ref ="houseFeedFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseFeedFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseFeedFacade"/> 
+    </bean>        
+    <bean id="houseFeedFacade" factory-bean="houseFeedFacadeFactory" factory-method = "createProxy" >
+    </bean>          
+                                   
+    <dubbo:service interface="com.lianjia.house.api.HouseFinanceFacade" ref ="houseFinanceFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseFinanceFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseFinanceFacade"/> 
+    </bean>        
+    <bean id="houseFinanceFacade" factory-bean="houseFinanceFacadeFactory" factory-method = "createProxy" >
+    </bean> 
+
+    <dubbo:service interface="com.lianjia.house.api.HouseHdicFacade" ref ="houseHdicFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseHdicFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseHdicFacade"/> 
+    </bean>        
+    <bean id="houseHdicFacade" factory-bean="houseHdicFacadeFactory" factory-method = "createProxy" >
+    </bean> 
+    
+    <dubbo:service interface="com.lianjia.house.api.HouseLinkAppFacade" ref ="houseLinkAppFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseLinkAppFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseLinkAppFacade"/> 
+    </bean>        
+    <bean id="houseLinkAppFacade" factory-bean="houseLinkAppFacadeFactory" factory-method = "createProxy" >
+    </bean>  
+       
+    <dubbo:service interface="com.lianjia.house.api.HouseOwnerFacade" ref ="houseOwnerFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseOwnerFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseOwnerFacade"/> 
+    </bean>        
+    <bean id="houseOwnerFacade" factory-bean="houseOwnerFacadeFactory" factory-method = "createProxy" >
+    </bean> 
+    
+    <dubbo:service interface="com.lianjia.house.api.HousePerformanceFacade" ref ="housePerformanceFacade" version="1.0.1" registry="provider"/>
+    <bean id="housePerformanceFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HousePerformanceFacade"/> 
+    </bean>        
+    <bean id="housePerformanceFacade" factory-bean="housePerformanceFacadeFactory" factory-method = "createProxy" >
+    </bean>     
+
+    <dubbo:service interface="com.lianjia.house.api.HouseSearchProvider" ref ="houseSearchProvider" version="1.0.1" registry="provider"/>
+    <bean id="houseSearchProviderFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseSearchProvider"/> 
+    </bean>        
+    <bean id="houseSearchProvider" factory-bean="houseSearchProviderFactory" factory-method = "createProxy" >
+    </bean> 
+    
+    <dubbo:service interface="com.lianjia.house.api.HouseSelfBuildFacade" ref ="houseSelfBuildFacade" version="1.0.1" registry="provider"/>
+    <bean id="houseSelfBuildFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.house.api.HouseSelfBuildFacade"/> 
+    </bean>        
+    <bean id="houseSelfBuildFacade" factory-bean="houseSelfBuildFacadeFactory" factory-method = "createProxy" >
+    </bean>        
+      
+    <dubbo:service interface="com.lianjia.feed.api.trend.FeedFacade"  ref = "feedFacade" version="1.0.1" registry="provider" />
+    <bean id="feedFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.feed.api.trend.FeedFacade"/> 
+    </bean>        
+    <bean id="feedFacade" factory-bean="feedFacadeFactory" factory-method = "createProxy" >
+    </bean>    
+    
+    <dubbo:service interface="com.lianjia.feed.api.trend.FollowFacade" ref = "followFacade" version="1.0.1" registry="provider"/>
+        <bean id="followFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.feed.api.trend.FollowFacade"/> 
+    </bean>        
+    <bean id="followFacade" factory-bean="followFacadeFactory" factory-method = "createProxy" >
+    </bean>   
+
+    <dubbo:service interface="com.lianjia.feed.api.trend.AuthorityFacade"  ref = "authorityFeedFacade" version="1.0.1" registry="provider" />
+    <bean id="authorityFacadeFeedFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.feed.api.trend.AuthorityFacade"/> 
+    </bean>        
+    <bean id="authorityFeedFacade" factory-bean="authorityFacadeFeedFactory" factory-method = "createProxy" >
+    </bean>   
+    
+    <dubbo:service interface="com.lianjia.feed.api.trend.FeedRPCFacade"  ref = "feedRPCFacade" version="1.0.1" registry="provider" />
+    <bean id="feedRPCFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.feed.api.trend.FeedRPCFacade"/> 
+    </bean>        
+    <bean id="feedRPCFacade" factory-bean="feedRPCFacadeFactory" factory-method = "createProxy" >
+    </bean>   
+    
+        <dubbo:service interface="com.lianjia.feed.api.trend.FollowRPCFacade"  ref = "followRPCFacade" version="1.0.1" registry="provider" />
+    <bean id="followRPCFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.feed.api.trend.FollowRPCFacade"/> 
+    </bean>        
+    <bean id="followRPCFacade" factory-bean="followRPCFacadeFactory" factory-method = "createProxy" >
+    </bean>   
+    <dubbo:service interface="com.lianjia.division.api.DivisionFacade" ref = "divisionFacade"  registry="provider"/>
+        <bean id="divisionFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.division.api.DivisionFacade"/> 
+    </bean>        
+    <bean id="divisionFacade" factory-bean="divisionFacadeFactory" factory-method = "createProxy" >
+    </bean>      
+        
+    <dubbo:service interface="com.lianjia.semain.api.service.SemainFacade" ref = "semainFacade" version="1.0.1"  registry="provider"/>
+        <bean id="semainFacadeFactory" class="com.lianjia.test.DubboFactory" >   
+        <constructor-arg value="com.lianjia.semain.api.service.SemainFacade"/> 
+    </bean>        
+    <bean id="semainFacade" factory-bean="semainFacadeFactory" factory-method = "createProxy" >
+    </bean>      
+    <!-- <import resource="dubbo-consumer.xml" /> -->
+</beans>     
+          
